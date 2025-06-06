@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Top Places to Visit in Thailand</title>
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-sans leading-relaxed bg-gray-50 text-gray-800">
+
+  <!-- Navigation -->
+  <header class="bg-emerald-600 text-white">
+    <nav class="container mx-auto flex items-center justify-between p-4">
+      <h1 class="text-xl font-bold">Kfir &amp; Yonatan</h1>
+      <ul class="flex gap-4 text-sm">
+        <li><a href="index.html" class="hover:underline">Home</a></li>
+        <li><a href="places.html" class="hover:underline">Top Places</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Places Grid -->
+  <main class="container mx-auto px-4 py-10">
+    <h2 class="text-2xl font-bold mb-8 text-center">
+      Must-Visit Destinations in Thailand
+    </h2>
+
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+      <!-- Card: Phi Phi Islands -->
+      <article class="bg-white rounded-2xl shadow overflow-hidden">
+        <img src="./assets/phiphi.jpg"
+             alt="Clear turquoise water and cliffs of Phi Phi Islands"
+             class="w-full h-48 object-cover">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold mb-2">Phi Phi Islands</h3>
+          <p class="text-sm">
+            Iconic turquoise bays, limestone cliffs, and white-sand beaches—perfect for diving and
+            snorkeling.
+          </p>
+        </div>
+      </article>
+
+      <!-- Card: Chiang Mai -->
+      <article class="bg-white rounded-2xl shadow overflow-hidden">
+        <img src="./assets/chiangmai.jpg"
+             alt="Golden temple roofs in Chiang Mai"
+             class="w-full h-48 object-cover">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold mb-2">Chiang Mai</h3>
+          <p class="text-sm">
+            The cultural heart of northern Thailand: ancient temples, colorful night markets,
+            and Thai cooking classes.
+          </p>
+        </div>
+      </article>
+
+      <!-- Card: Railay Beach -->
+      <article class="bg-white rounded-2xl shadow overflow-hidden">
+        <img src="./assets/raily.jpg"
+             alt="Sunset over Railay Beach"
+             class="w-full h-48 object-cover">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold mb-2">Railay Beach</h3>
+          <p class="text-sm">
+            A secluded peninsula in Krabi known for dramatic limestone cliffs and a relaxed vibe—ideal
+            for rock climbing and sunsets.
+          </p>
+        </div>
+      </article>
+
+      <!-- Duplicate this card structure to add more places -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 text-center p-4">
+    © 2025 Kfir and Yonatan • Tailwind Demo
+  </footer>
+
+</body>
+</html>
