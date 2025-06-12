@@ -1,25 +1,34 @@
-/* ===== CI-Exercise 1 – cross-platform =================================
+/* ===== CI-Exercise 1 – cross-platform =====================================
  * 1. Prints welcome banner
  * 2. Ensures Python 3 + pip/pytest
  * 3. Repo checkout done automatically by Declarative
  * 4. Installs deps, adds dummy test when none exist, runs pytest
- * 5. Post-build: echo result (mail can be added later)
- * ===================================================================== */
+ * 5. Post-build: echoes result **and sends e-mail**
+ * ======================================================================== */
 
 pipeline {
     agent any
 
+    /* ------------------------------------------------------------------ */
+    /* 🔧 EDIT ME: your repository                                         */
+    /* ------------------------------------------------------------------ */
     environment {
         REPO_URL = 'https://github.com/kfiros94/DevOps_final_task.git'
         BRANCH   = 'main'
+        /* 🔧 EDIT ME: default recipients (comma-separated)                 */
+        RECIPIENTS = 'kfiramoyal@gmail.com'
+        /* (Optional) override sender                                      */
+        // SENDER_NAME = 'Jenkins CI'
+        // SENDER_ADDR = 'ci@example.com'
     }
 
+    /* Declarative automatically performs “checkout scm” before 1st stage */
+
     stages {
+        /* --------------------------- Build Stages ---------------------- */
 
         stage('Welcome') {
-            steps {
-                echo '👋  Welcome to CI-Exercise 1!'
-            }
+            steps { echo '👋  Welcome to CI-Exercise 1!' }
         }
 
         stage('Setup Python') {
@@ -88,10 +97,26 @@ python -m pytest -v
         }
     }
 
+    /* ---------------------------- Post Actions ------------------------ */
     post {
         always {
             echo "Build result: ${currentBuild.currentResult}"
-            /* add a mail step here after SMTP is configured */
+
+            /* ----------  🔧 EDIT ME: e-mail block enabled  -------------- */
+            mail to: env.RECIPIENTS,
+                 // replyTo and from are optional if configured globally
+                 // replyTo: env.SENDER_ADDR ?: '',
+                 // from:    env.SENDER_ADDR ?: '',
+                 subject: "CI-Exercise 1 – build #${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
+                 body: """\
+Job:     ${env.JOB_NAME}
+Build:   #${env.BUILD_NUMBER}
+Result:  ${currentBuild.currentResult}
+
+Console: ${env.BUILD_URL}console
+
+Triggered by: ${currentBuild.getBuildCauses()[0].shortDescription}
+"""
         }
     }
 }
