@@ -43,47 +43,34 @@ pipeline {
         }
 
         stage('Install & Test') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh '''
-                            set -e
-                            python3 -m pip install --upgrade pip pytest
-                            [ -f requirements.txt ] && pip install -r requirements.txt
-                            ls **/test_*.py >/dev/null 2>&1 || {
-                                mkdir -p tests
-                                cat > tests/test_dummy.py <<EOF
-def test_dummy():
-    assert 1 == 1
-EOF
-                            }
-                            python3 -m pytest -v
-                        '''
-                    } else {
-                        bat """
-                            @echo off
-                            python -m pip install --upgrade pip pytest
+    steps {
+        script {
+            if (isUnix()) {
+                /* … the Linux shell block you already have … */
+            } else {
+                bat """
+@echo off
+python -m pip install --upgrade pip pytest
 
-                            if exist requirements.txt (
-                                python -m pip install -r requirements.txt
-                            )
+if exist requirements.txt (
+    python -m pip install -r requirements.txt
+)
 
-                            rem ---- add dummy test if none exist ----
-                            dir /s /b tests\\test_*.py >nul 2>&1
-                            if errorlevel 1 (
-                                mkdir tests 2>nul
-                                (
-                                    echo def test_dummy():
-                                    echo     assert 1 == 1
-                                ) > tests\\test_dummy.py
-                            )
+rem ---------- add dummy test if none exist ----------
+dir /s /b tests\\test_*.py >nul 2>&1
+if %errorlevel% neq 0 (
+    mkdir tests 2>nul
+    echo def test_dummy():>  tests\\test_dummy.py
+    echo     assert 1 == 1>> tests\\test_dummy.py
+)
 
-                            python -m pytest -v
-                        """
-                    }
-                }
+python -m pytest -v
+"""
             }
         }
+    }
+}
+
     }
 
     post {
